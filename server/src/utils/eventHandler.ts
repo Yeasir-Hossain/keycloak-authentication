@@ -2,6 +2,7 @@ import { Server } from "http";
 import { eventsToHandle } from "../config/contants";
 import startServer from "../server";
 import app from "../app";
+import logger from "./logger";
 
 let server: Server | null = null;
 
@@ -17,10 +18,10 @@ export function setServerInstance(srv: Server): void {
  */
 export function handleEvents(): void {
   const gracefulShutdown = (event: string) => {
-    console.log(`"${event}" received. Shutting down gracefully...`);
+    logger.info(`"${event}" received. Shutting down gracefully...`);
     if (server) {
       server.close(() => {
-        console.log("=> Server closed.");
+        logger.info("=> Server closed.");
         process.exit(0);
       });
     } else {
@@ -29,10 +30,10 @@ export function handleEvents(): void {
   };
 
   const restartServer = (e: unknown) => {
-    console.log("=> Restarting server because", e);
+    logger.info("=> Restarting server because", e);
     if (server) {
       server.close(() => {
-        console.log("=> Server closed. Restarting...");
+        logger.info("=> Server closed. Restarting...");
         startServer(app);
       });
     } else {

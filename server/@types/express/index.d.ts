@@ -1,7 +1,6 @@
-import { IUser } from './../../src/config/interfaces';
-
 declare namespace Express {
 	interface Request {
-		user?: IUser;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		kauth?: any;
 	}
 }

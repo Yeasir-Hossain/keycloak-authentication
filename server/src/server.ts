@@ -12,8 +12,6 @@ const PORT = process.env.PORT || 5000;
  */
 async function startServer(app: Express): Promise<void> {
 	try {
-		// const dbStatus = await connectToMongo();
-		// console.log(dbStatus);
 		const mongoDb = await connectToMongo();
 		logger.info(mongoDb);
 

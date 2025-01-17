@@ -14,7 +14,7 @@ lerna-debug.log*
 pnpm-lock.yaml
 yarn-lock.yaml
 package-lock.json
-
+keycloak.json
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json

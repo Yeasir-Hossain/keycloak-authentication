@@ -1,10 +1,11 @@
 import { Router } from "express";
 
-import taskRoute from "../../services/texts/route";
+import textsRoute from "../../services/texts/route";
+import authRoute from "../../services/auth/route";
 
 const router: Router = Router();
 
-const v1: Array<Router> = [taskRoute];
+const v1: Array<Router> = [textsRoute, authRoute];
 
 router.use("/api/v1", v1);
 

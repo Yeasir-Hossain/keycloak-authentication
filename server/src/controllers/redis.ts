@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Redis from "ioredis";
+import logger from "../utils/logger";
 
 class RedisUtils {
   private client: Redis;
@@ -11,7 +12,7 @@ class RedisUtils {
       host: "localhost",
       port: 6379
     });
-    if (this.client) console.log("=> Redis client initialized");
+    if (this.client) logger.info("=> Redis client initialized");
   }
 
   async setValue(key: string, value: string, ttl?: number) {

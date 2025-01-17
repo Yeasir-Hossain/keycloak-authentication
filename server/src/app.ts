@@ -13,11 +13,23 @@ import helmet from "helmet";
 import routerV1 from "./routes/v1";
 import * as morgan from "./utils/morgan";
 import errorHandler from "./middleware/errorHandler";
+import session from "express-session";
+import { keycloak, memoryStore } from "./controllers/keyCloak";
 
 // Express application configuration
 const app = express();
+app.set('trust proxy', true);
 
 // Middleware setup
+app.use(
+  session({
+    secret: 'nissan-gtr35-nismo',
+    resave: false,
+    saveUninitialized: true,
+    store: memoryStore,
+  })
+);
+
 app.use(
   cors({
     origin: process.env.CORS_ORIGIN?.split(",")
@@ -43,9 +55,6 @@ app.use(
   })
 );
 
-app.use(compression());
-app.use(helmet());
-app.disable("x-powered-by");
 app.use(
   rateLimit({
     windowMs: 15 * 60 * 100,
@@ -55,6 +64,11 @@ app.use(
     message: "You Have Bombered The API!"
   })
 );
+
+app.use(keycloak.middleware());
+app.use(compression());
+app.use(helmet());
+app.disable("x-powered-by");
 
 app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: false, limit: "5mb" }));

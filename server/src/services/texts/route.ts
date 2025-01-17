@@ -59,18 +59,16 @@ router.get(
 router.patch(
 	"/text/:id",
 	asyncHandler(async (req, res) => {
-		const { id } = req.params;
 		await updateText(req, res);
-		await cacheUtils.invalidateCache(id);
+		await cacheUtils.invalidateCache(req.params.id);
 	})
 );
 
 router.delete(
 	"/text/:id",
 	asyncHandler(async (req, res) => {
-		const { id } = req.params;
 		await deleteText(req, res);
-		await cacheUtils.invalidateCache(id);
+		await cacheUtils.invalidateCache(req.params.id);
 	})
 );
 
