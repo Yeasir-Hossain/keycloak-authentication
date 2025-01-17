@@ -7,6 +7,7 @@ import HttpError from "../../errors/httpError";
  * Fetch all texts from the database.
  */
 export const getAll = async (_req: Request, res: Response): Promise<Response> => {
+	await new Promise(resolve => setTimeout(resolve, 10000));
 	const texts = await Text.find();
 	return res.status(200).json(texts);
 };
@@ -59,31 +60,31 @@ export const deleteText = async (req: Request, res: Response): Promise<Response>
  */
 
 export const getWordCount = async (req: Request, res: Response): Promise<Response> => {
-	const text = await Text.findById(req.params.id);
+	const text = await Text.findById(req.params.id).select('wordCount');
 	if (!text) throw new HttpError("Text not found", 404, true);
-	return res.status(200).json({ wordCount: text.wordCount });
+	return res.status(200).json(text);
 };
 
 export const getCharacterCount = async (req: Request, res: Response): Promise<Response> => {
-	const text = await Text.findById(req.params.id);
+	const text = await Text.findById(req.params.id).select('characterCount');
 	if (!text) throw new HttpError("Text not found", 404, true);
-	return res.status(200).json({ characterCount: text.characterCount });
+	return res.status(200).json(text);
 };
 
 export const getSentenceCount = async (req: Request, res: Response): Promise<Response> => {
-	const text = await Text.findById(req.params.id);
+	const text = await Text.findById(req.params.id).select('sentenceCount');
 	if (!text) throw new HttpError("Text not found", 404, true);
-	return res.status(200).json({ sentenceCount: text.sentenceCount });
+	return res.status(200).json(text);
 };
 
 export const getParagraphCount = async (req: Request, res: Response): Promise<Response> => {
-	const text = await Text.findById(req.params.id);
+	const text = await Text.findById(req.params.id).select("paragraphCount");
 	if (!text) throw new HttpError("Text not found", 404, true);
-	return res.status(200).json({ paragraphCount: text.paragraphCount });
+	return res.status(200).json(text);
 };
 
 export const getLongestWords = async (req: Request, res: Response): Promise<Response> => {
-	const text = await Text.findById(req.params.id);
+	const text = await Text.findById(req.params.id).select('longestWords');
 	if (!text) throw new HttpError("Text not found", 404, true);
-	return res.status(200).json({ longestWords: text.longestWords });
+	return res.status(200).json(text);
 };
