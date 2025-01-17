@@ -21,7 +21,7 @@ function getLongestWords(text: string): string[] {
 }
 
 // Middleware to calculate fields on save
-schema.post("save", function () {
+schema.pre("save", function () {
 	const content = this.text || "";
 	this.wordCount = content.split(/\s+/).filter(Boolean).length;
 	this.characterCount = content.replace(/\s+/g, "").length;
