@@ -10,7 +10,7 @@ export default function errorHandler(err: HttpError | Error | ValidationError, _
     next(err);
   }
 
-  logger.error(err);
+  // IS_DEV_MODE && console.log(err);
 
   const hasValidationError = err instanceof ValidationError && err.isJoi;
 
