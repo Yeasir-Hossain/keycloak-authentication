@@ -1,4 +1,5 @@
 import { ScrollArea, ScrollBar } from "@/components/shared/scroll-area";
+import ReduxProvider from "@/providers/ReduxProvider";
 import { BrowserRouter } from "react-router";
 import AuthProvider from "@/providers/AuthProvider";
 
@@ -9,18 +10,20 @@ export default function Global({
 }>) {
 	return (
 		<BrowserRouter>
-			<AuthProvider>
-				<div className="h-screen overflow-auto antialiased">
-					<div className="flex h-screen">
-						<div className="h-full flex-1 overflow-y-auto">
-							<ScrollArea className="h-full">
-								{children}
-								<ScrollBar color="#009BF2" />
-							</ScrollArea>
+			<ReduxProvider>
+				<AuthProvider>
+					<div className="h-screen overflow-auto antialiased">
+						<div className="flex h-screen">
+							<div className="h-full flex-1 overflow-y-auto">
+								<ScrollArea className="h-full">
+									{children}
+									<ScrollBar color="#009BF2" />
+								</ScrollArea>
+							</div>
 						</div>
 					</div>
-				</div>
-			</AuthProvider>
+				</AuthProvider>
+			</ReduxProvider>
 		</BrowserRouter>
 	)
 }
