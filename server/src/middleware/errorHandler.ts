@@ -4,27 +4,44 @@ import HttpError from "../errors/httpError";
 
 const IS_DEV_MODE: boolean = process.env.NODE_ENV === "development";
 
-export default function errorHandler(err: HttpError | Error | ValidationError, _req: Request, res: Response, next: NextFunction) {
+export default function errorHandler(
+  err: HttpError | Error | ValidationError,
+  _req: Request,
+  res: Response,
+  next: NextFunction
+) {
   if (res.headersSent) {
-    next(err);
+    return next(err);
   }
 
-  const hasValidationError = err instanceof ValidationError && err.isJoi;
-
-  if (hasValidationError) {
+  if (err instanceof ValidationError && err.isJoi) {
     return res.status(422).json({
+      status_code: 422,
       message: "Validation Error",
-      error: err.details.map(details => details.message).join(", ")
+      error: err.details.map(detail => detail.message).join(", ")
     });
   }
 
-  const status = IS_DEV_MODE && err instanceof HttpError ? err.statusCode : 500;
-  const message = IS_DEV_MODE && err instanceof HttpError ? err.message : "Internal Server Error";
-  res.locals.errorMessage = err.message;
+  if (err instanceof HttpError && err.isOperational) {
+    return res.status(err.statusCode).json({
+      status_code: err.statusCode,
+      message: err.message,
+      ...(IS_DEV_MODE && { stack: err.stack })
+    });
+  }
 
-  return res.status(status).json({
-    status_code: status,
-    message,
-    ...(err instanceof HttpError && IS_DEV_MODE && { error: err.isOperational ? err.stack : null })
+  const defaultError = {
+    status_code: 500,
+    message: "Internal Server Error"
+  };
+
+  const devError = IS_DEV_MODE ? {
+    actualMessage: err.message,
+    stack: err.stack
+  } : {};
+
+  return res.status(500).json({
+    ...defaultError,
+    ...devError
   });
 }

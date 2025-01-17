@@ -5,3 +5,7 @@ export const textCreateValidation = Joi.object({
 		"string.empty": "Text is required"
 	}),
 });
+
+export const textUpdateValidation = Joi.object({
+	text: Joi.string().optional()
+});
