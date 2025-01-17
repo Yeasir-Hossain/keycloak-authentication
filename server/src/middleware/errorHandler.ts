@@ -1,7 +1,6 @@
 import { Request, NextFunction, Response } from "express";
 import { ValidationError } from "joi";
 import HttpError from "../errors/httpError";
-import logger from "../utils/logger";
 
 const IS_DEV_MODE: boolean = process.env.NODE_ENV === "development";
 
@@ -9,8 +8,6 @@ export default function errorHandler(err: HttpError | Error | ValidationError, _
   if (res.headersSent) {
     next(err);
   }
-
-  // IS_DEV_MODE && console.log(err);
 
   const hasValidationError = err instanceof ValidationError && err.isJoi;
 

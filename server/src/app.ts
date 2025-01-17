@@ -4,7 +4,7 @@ config();
 import compression from "compression";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import express, { NextFunction, Request, Response } from "express";
+import express, { Request, Response } from "express";
 import actuator from "express-actuator";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
@@ -14,7 +14,8 @@ import routerV1 from "./routes/v1";
 import { setServerInstance } from "./utils/eventHandler";
 import connectToMongo from "./db/connectToMongo";
 import logger from "./utils/logger";
-import { successHandler, errorHandler } from "./utils/morgan";
+import * as morgan from "./utils/morgan";
+import errorHandler from "./middleware/errorHandler";
 
 // Express application configuration
 const PORT = process.env.PORT || 5000;
@@ -48,8 +49,6 @@ app.use(
 
 app.use(compression());
 app.use(helmet());
-app.use(successHandler);
-app.use(errorHandler);
 app.disable("x-powered-by");
 app.use(
   rateLimit({
@@ -64,6 +63,8 @@ app.use(
 app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: false, limit: "5mb" }));
 app.use(cookieParser());
+app.use(morgan.successHandler);
+app.use(morgan.errorHandler);
 
 // Default routes
 app.get("/", (_req: Request, res: Response) => {
