@@ -1,6 +1,7 @@
 import { Server } from "http";
-import startServer from "../app";
 import { eventsToHandle } from "../config/contants";
+import startServer from "../server";
+import app from "../app";
 
 let server: Server | null = null;
 
@@ -16,7 +17,6 @@ export function setServerInstance(srv: Server): void {
  */
 export function handleEvents(): void {
   const gracefulShutdown = (event: string) => {
-    console.log(event);
     console.log(`"${event}" received. Shutting down gracefully...`);
     if (server) {
       server.close(() => {
@@ -33,10 +33,10 @@ export function handleEvents(): void {
     if (server) {
       server.close(() => {
         console.log("=> Server closed. Restarting...");
-        startServer();
+        startServer(app);
       });
     } else {
-      startServer();
+      startServer(app);
     }
   };
 

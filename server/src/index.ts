@@ -1,8 +1,9 @@
-import startServer from "./app";
+import app from "./app";
+import startServer from "./server";
 import { handleEvents } from "./utils/eventHandler";
 
-(async () => {
-    startServer();
+(() => {
+    startServer(app);
     handleEvents();
 })();
 
