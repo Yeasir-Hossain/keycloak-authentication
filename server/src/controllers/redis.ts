@@ -7,15 +7,9 @@ class RedisUtils {
   constructor() {
     //  If using docker images then then use the (host:"redis"),
     //  and (port:6379) while creating the instance.
-    /**
-     * this.client = new Redis({
-     *  host: 'redis',
-     *  port: 6379,
-     * });
-     */
     this.client = new Redis({
       host: "localhost",
-      port: 6380
+      port: 6379
     });
     if (this.client) console.log("=> Redis client initialized");
   }
