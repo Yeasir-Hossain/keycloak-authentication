@@ -28,7 +28,7 @@ export function handleEvents(): void {
     }
   };
 
-  const restartServer = (e: any) => {
+  const restartServer = (e: unknown) => {
     console.log("=> Restarting server because", e);
     if (server) {
       server.close(() => {

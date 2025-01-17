@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import taskRoute from "../../services/texts/route"
+import taskRoute from "../../services/texts/route";
 
 const router: Router = Router();
 

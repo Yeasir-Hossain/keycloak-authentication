@@ -12,8 +12,7 @@ export default function errorHandler(err: HttpError | Error | ValidationError, _
   const hasValidationError = err instanceof ValidationError && err.isJoi;
 
   if (hasValidationError) {
-    return res.status(400).json({
-      status_code: 422,
+    return res.status(422).json({
       message: "Validation Error",
       error: err.details.map(details => details.message).join(", ")
     });
@@ -21,6 +20,7 @@ export default function errorHandler(err: HttpError | Error | ValidationError, _
 
   const status = IS_DEV_MODE && err instanceof HttpError ? err.statusCode : 500;
   const message = IS_DEV_MODE && err instanceof HttpError ? err.message : "Internal Server Error";
+  res.locals.errorMessage = err.message;
 
   return res.status(status).json({
     status_code: status,

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Redis from "ioredis";
 
 class RedisUtils {
@@ -21,7 +22,7 @@ class RedisUtils {
 
   async setValue(key: string, value: string, ttl?: number) {
     await this.client.set(key, value);
-    ttl && (await this.client.expire(key, ttl));
+    if (ttl) await this.client.expire(key, ttl);
   }
 
   async removeValue(key: string): Promise<void> {
