@@ -1,0 +1,1 @@
+export const eventsToHandle: string[] = ["SIGTERM", "SIGINT", "unhandledRejection", "uncaughtException", "SIGUSR2"];
