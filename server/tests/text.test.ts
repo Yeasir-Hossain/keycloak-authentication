@@ -90,4 +90,49 @@ describe("Text Routes", () => {
 			expect(res.body.message).toBe("Text not found");
 		});
 	});
+
+	describe("GET /text/:id/words", () => {
+		test("Should return the word count of a text", async () => {
+			const newText = await Text.create({ text: "The quick brown fox jumps over the lazy dog." });
+			const res = await request(app).get(`/api/v1/text/${newText.id}/words`);
+			expect(res.statusCode).toBe(200);
+			expect(res.body.wordCount).toBe(9);
+		});
+	});
+
+	describe("GET /text/:id/characters", () => {
+		test("Should return the character count of a text", async () => {
+			const newText = await Text.create({ text: "Hello world!" });
+			const res = await request(app).get(`/api/v1/text/${newText.id}/characters`);
+			expect(res.statusCode).toBe(200);
+			expect(res.body.characterCount).toBe(11); // "Hello world" without spaces
+		});
+	});
+
+	describe("GET /text/:id/sentences", () => {
+		test("Should return the sentence count of a text", async () => {
+			const newText = await Text.create({ text: "Hello world! This is a test. Let's count sentences." });
+			const res = await request(app).get(`/api/v1/text/${newText.id}/sentences`);
+			expect(res.statusCode).toBe(200);
+			expect(res.body.sentenceCount).toBe(3);
+		});
+	});
+
+	describe("GET /text/:id/paragraphs", () => {
+		test("Should return the paragraph count of a text", async () => {
+			const newText = await Text.create({ text: "Paragraph one.\n\nParagraph two." });
+			const res = await request(app).get(`/api/v1/text/${newText.id}/paragraphs`);
+			expect(res.statusCode).toBe(200);
+			expect(res.body.paragraphCount).toBe(2);
+		});
+	});
+
+	describe("GET /text/:id/longest-words", () => {
+		test("Should return the longest words in a text", async () => {
+			const newText = await Text.create({ text: "Supercalifragilisticexpialidocious is a long word." });
+			const res = await request(app).get(`/api/v1/text/${newText.id}/longest-words`);
+			expect(res.statusCode).toBe(200);
+			expect(res.body.longestWords).toContain("Supercalifragilisticexpialidocious");
+		});
+	});
 });

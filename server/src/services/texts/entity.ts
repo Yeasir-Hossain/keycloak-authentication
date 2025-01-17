@@ -53,3 +53,37 @@ export const deleteText = async (req: Request, res: Response): Promise<Response>
 
 	return res.status(200).json({ message: 'Text deleted successfully' });
 };
+
+/**
+ * text analyzer entities
+ */
+
+export const getWordCount = async (req: Request, res: Response): Promise<Response> => {
+	const text = await Text.findById(req.params.id);
+	if (!text) throw new HttpError("Text not found", 404, true);
+	return res.status(200).json({ wordCount: text.wordCount });
+};
+
+export const getCharacterCount = async (req: Request, res: Response): Promise<Response> => {
+	const text = await Text.findById(req.params.id);
+	if (!text) throw new HttpError("Text not found", 404, true);
+	return res.status(200).json({ characterCount: text.characterCount });
+};
+
+export const getSentenceCount = async (req: Request, res: Response): Promise<Response> => {
+	const text = await Text.findById(req.params.id);
+	if (!text) throw new HttpError("Text not found", 404, true);
+	return res.status(200).json({ sentenceCount: text.sentenceCount });
+};
+
+export const getParagraphCount = async (req: Request, res: Response): Promise<Response> => {
+	const text = await Text.findById(req.params.id);
+	if (!text) throw new HttpError("Text not found", 404, true);
+	return res.status(200).json({ paragraphCount: text.paragraphCount });
+};
+
+export const getLongestWords = async (req: Request, res: Response): Promise<Response> => {
+	const text = await Text.findById(req.params.id);
+	if (!text) throw new HttpError("Text not found", 404, true);
+	return res.status(200).json({ longestWords: text.longestWords });
+};
