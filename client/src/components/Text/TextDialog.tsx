@@ -1,15 +1,22 @@
-import { useState } from "react";
-import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCreateTextMutation } from "@/features/text/textSlice";
+import { useCreateTextMutation, useGetSingleTextQuery, useUpdateTextMutation } from "@/features/text/textSlice";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from "@/components/shared/dialog";
 import { Button } from "@/components/shared/button";
 import { Textarea } from "@/components/shared/textarea";
 import { TextFormData, textSchema } from "@/validations";
 
-export default function AddTextDialog() {
-	const [createText, { isLoading }] = useCreateTextMutation();
+interface TextDialogProps {
+	edit?: boolean;
+	id?: string;
+}
+
+export default function TextDialog({ edit = false, id }: TextDialogProps) {
 	const [isOpen, setIsOpen] = useState(false);
+	const { data: text } = useGetSingleTextQuery(id!, { skip: !edit });
+	const [createText, { isLoading: createLoading }] = useCreateTextMutation();
+	const [updateText, { isLoading: updateLoading }] = useUpdateTextMutation();
 
 	const form = useForm<TextFormData>({
 		resolver: zodResolver(textSchema),
@@ -20,15 +27,26 @@ export default function AddTextDialog() {
 
 	const { register, handleSubmit, reset, formState: { errors } } = form;
 
-	// Handle form submission
-	const onSubmit: SubmitHandler<TextFormData> = async (data) => {
+	useEffect(() => {
+		if (edit && text) {
+			form.reset({
+				text: text.text,
+			});
+		}
+	}, [edit, text, form]);
+
+	const onSubmit = async (data: TextFormData) => {
 		try {
-			await createText(data.text).unwrap();
-			reset();
-			setIsOpen(false);
-		} catch (error) {
-			console.error(error);
-			alert("Failed to add text. Please try again.");
+			if (edit && id) {
+				await updateText({ id, text: data.text }).unwrap();
+				setIsOpen(false);
+			} else {
+				await createText(data.text).unwrap();
+				setIsOpen(false);
+			}
+			form.reset();
+		} catch (e: any) {
+			console.error(e);
 		}
 	};
 
@@ -41,11 +59,11 @@ export default function AddTextDialog() {
 	return (
 		<Dialog open={isOpen} onOpenChange={setIsOpen}>
 			<DialogTrigger asChild>
-				<Button>Add Text</Button>
+				<Button>{edit ? 'Update' : 'Add'} Text</Button>
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Add New Text</DialogTitle>
+					<DialogTitle>{edit ? 'Update' : 'Add New'} Text</DialogTitle>
 				</DialogHeader>
 				<FormProvider {...form}>
 					<form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -59,8 +77,8 @@ export default function AddTextDialog() {
 							<p className="text-red-500 text-sm">{errors.text.message}</p>
 						)}
 						<DialogFooter>
-							<Button type="submit" disabled={isLoading}>
-								{isLoading ? "Saving..." : "Save"}
+							<Button type="submit" disabled={createLoading || updateLoading}>
+								{(createLoading || updateLoading) ? "Saving..." : "Save"}
 							</Button>
 							<Button
 								variant="secondary"

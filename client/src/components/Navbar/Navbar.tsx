@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import AddTextDialog from "./AddTextDialog";
+import TextDialog from "../Text/TextDialog";
 
 export default function Navbar() {
 	return (
@@ -7,7 +7,7 @@ export default function Navbar() {
 			<div className="text-lg font-bold">
 				<Link to={"/"}>WSD</Link>
 			</div>
-			<AddTextDialog />
+			<TextDialog />
 		</div>
 	);
 }
