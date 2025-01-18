@@ -2,15 +2,19 @@ import Loading from "@/components/shared/Loading";
 import { useLazyGetMeQuery } from "@/features/auth/authSlice";
 import React, { useEffect } from "react";
 
-export default function AuthProvider({ children }: { children: React.ReactNode }): React.ReactNode {
+export default function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element | null {
   const [getMe, { isLoading }] = useLazyGetMeQuery();
 
   const getUserData = async () => {
-    await getMe();
-  }
+    try {
+      await getMe({}).unwrap();
+    } catch (error) {
+      console.error("Failed to fetch user data:", error);
+    }
+  };
 
   useEffect(() => {
-    getUserData()
+    getUserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
