@@ -1,11 +1,7 @@
 import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.NEXT_PUBLIC_SERVER_URL as string,
-  prepareHeaders: async (headers) => {
-    headers.set('x-api-key', process.env.NEXT_PUBLIC_API_KEY as string);
-    return headers;
-  },
+  baseUrl: import.meta.env.VITE_PUBLIC_SERVER_URL as string,
   credentials: 'include',
 });
 

@@ -4,9 +4,12 @@ import { Card, CardContent } from '@/components/shared/card'
 import TextCardLoading from '@/components/skeleton/TextCardLoading'
 import { Button } from '@/components/shared/button'
 import TextDialog from '@/components/Text/TextDialog'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/features/store'
 
-export default function Home() {
-	const { data: texts, isLoading } = useGetAllTextsQuery({})
+export default function MyList() {
+	const user = useSelector((state: RootState) => state.authStore.user);
+	const { data: texts, isLoading } = useGetAllTextsQuery({ email: user?.email }, { skip: !user })
 	const [deleteText] = useDeleteTextMutation();
 
 	const handleDelete = async (id: string) => {

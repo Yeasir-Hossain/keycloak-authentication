@@ -4,8 +4,12 @@ import { apiSlice } from "@/features/api/apiSlice";
 export const textAnalysisApi = apiSlice.injectEndpoints({
 	overrideExisting: true,
 	endpoints: (builder) => ({
-		getAllTexts: builder.query<IText[], void>({
-			query: () => `/text`,
+		getAllTexts: builder.query<IText[], any>({
+			query: (queries) => {
+				const values = Object.values(queries);
+				if (values.length) return `/text?${new URLSearchParams(queries)}`;
+				return '/text';
+			},
 			providesTags: (result) =>
 				result
 					? [

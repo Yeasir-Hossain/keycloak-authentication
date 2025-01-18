@@ -15,10 +15,11 @@ import {
 import cacheMiddleware from "../../middleware/cache";
 import redis from "../../controllers/redis";
 import * as cacheUtils from "../../utils/cache";
+import auth from "../../middleware/auth";
 
 const router = Router();
 
-router.post("/text", asyncHandler(async (req, res) => {
+router.post("/text", auth.bind({ continue: true }), asyncHandler(async (req, res) => {
 	await addText(req, res);
 	await redis.removeValue(cacheUtils.cacheKey.list());
 })

@@ -2,12 +2,21 @@ import { Request, Response } from "express";
 import Text from "./model";
 import { textCreateValidation, textUpdateValidation } from "./validation";
 import HttpError from "../../errors/httpError";
+import redis from "../../controllers/redis";
+import { cacheKey } from "../../utils/cache";
 
 /**
  * Fetch all texts from the database.
  */
-export const getAll = async (_req: Request, res: Response): Promise<Response> => {
-	const texts = await Text.find();
+export const getAll = async (req: Request, res: Response): Promise<Response> => {
+	const query: { email?: string } = {};
+	if (typeof req.query.email === 'string') {
+		query.email = req.query.email;
+		await redis.removeValue(cacheKey.list());
+	}
+
+	// Fetch texts with the query
+	const texts = await Text.find(query);
 	return res.status(200).json(texts);
 };
 
@@ -25,6 +34,7 @@ export const getOne = async (req: Request, res: Response): Promise<Response> => 
  */
 export const addText = async (req: Request, res: Response): Promise<Response> => {
 	const data = await textCreateValidation.validateAsync(req.body, { abortEarly: false });
+	if (req.user.email) data.email = req.user.email;
 	const text = await Text.create(data);
 	return res.status(201).json(text);
 };

@@ -4,7 +4,10 @@ import { Request, Response, NextFunction } from "express";
 export default async function auth(req: Request, res: Response, next: NextFunction) {
 	try {
 		const token = req?.cookies?.[process.env.COOKIE_KEY!] || req?.headers?.authorization?.replace("Bearer ", "");
-		if (!token) return res.status(401).json({ message: 'No token provided' });
+
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		//@ts-ignore
+		if (!token && this.continue) return res.status(401).json({ message: 'No token provided' });
 
 		const decoded = jwt.decode(token!) as JwtPayload;
 		if (!decoded) {

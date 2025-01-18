@@ -4,6 +4,7 @@ import { Schema, model } from "mongoose";
 const schema = new Schema(
 	{
 		text: { type: String, required: true },
+		email: { type: String },
 		wordCount: { type: Number },
 		characterCount: { type: Number },
 		sentenceCount: { type: Number },

@@ -14,7 +14,7 @@ interface TextDialogProps {
 
 export default function TextDialog({ edit = false, id }: TextDialogProps) {
 	const [isOpen, setIsOpen] = useState(false);
-	const { data: text } = useGetSingleTextQuery(id!, { skip: !edit });
+	const { data: text } = useGetSingleTextQuery(id!, { skip: !edit && !isOpen });
 	const [createText, { isLoading: createLoading }] = useCreateTextMutation();
 	const [updateText, { isLoading: updateLoading }] = useUpdateTextMutation();
 

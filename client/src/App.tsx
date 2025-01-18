@@ -5,6 +5,7 @@ import Text from "./pages/singleText/Text";
 import Client from "./layouts/Client";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
+import MyList from "./pages/myList/MyList";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Route element={<Client />}>
         <Route path="/" index element={<Home />} />
         <Route path="/:id" index element={<Text />} />
+        <Route path="/my-texts" index element={<MyList />} />
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
