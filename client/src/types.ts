@@ -7,3 +7,15 @@ export interface IText {
 	sentenceCount: number
 	paragraphCount: number
 }
+
+export interface IUser {
+	username: string
+	email: string
+	firstName: string
+	lastName: string
+}
+
+
+export interface IAuthState {
+	user?: IUser | undefined;
+}

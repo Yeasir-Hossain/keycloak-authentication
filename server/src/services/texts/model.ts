@@ -17,7 +17,8 @@ const schema = new Schema(
 function getLongestWords(text: string): string[] {
 	const words = text.split(/\s+/).filter(Boolean);
 	const maxLength = Math.max(...words.map(word => word.length));
-	return words.filter(word => word.length === maxLength);
+	const longestWordsSet = new Set(words.filter(word => word.length === maxLength));
+	return Array.from(longestWordsSet);
 }
 
 // Middleware to calculate fields on save

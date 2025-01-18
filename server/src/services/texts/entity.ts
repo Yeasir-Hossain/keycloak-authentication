@@ -7,7 +7,6 @@ import HttpError from "../../errors/httpError";
  * Fetch all texts from the database.
  */
 export const getAll = async (_req: Request, res: Response): Promise<Response> => {
-	await new Promise(resolve => setTimeout(resolve, 10000));
 	const texts = await Text.find();
 	return res.status(200).json(texts);
 };

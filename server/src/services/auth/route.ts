@@ -6,6 +6,6 @@ import { me } from './entity';
 const router = Router();
 
 router.get('/user/login', (req, res) => res.redirect(keycloak.loginUrl("idontknow", process.env.REDIRECT_URL!)));
-router.get('/user/me', keycloak.protect(), keycloak.enforcer('user:profile'), asyncHandler(me));
+router.get('/user/me', keycloak.protect(), asyncHandler(me));
 
 export default router;

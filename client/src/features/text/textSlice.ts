@@ -46,19 +46,19 @@ export const textAnalysisApi = apiSlice.injectEndpoints({
 		}),
 
 		createText: builder.mutation({
-			query: (content: string) => ({
+			query: (text: string) => ({
 				url: `/text`,
 				method: 'POST',
-				body: { content },
+				body: { text },
 			}),
 			invalidatesTags: [{ type: 'text', id: 'LIST' }],
 		}),
 
 		updateText: builder.mutation({
-			query: ({ id, content }: { id: string; content: string }) => ({
+			query: ({ id, text }: { id: string; text: string }) => ({
 				url: `/text/${id}`,
 				method: 'PATCH',
-				body: { content },
+				body: { text },
 			}),
 			invalidatesTags: (_result, _error, { id }) => [
 				{ type: 'text', id },

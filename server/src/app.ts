@@ -18,7 +18,6 @@ import { keycloak, memoryStore } from "./controllers/keyCloak";
 
 // Express application configuration
 const app = express();
-app.set('trust proxy', true);
 
 // Middleware setup
 app.use(
