@@ -1,11 +1,14 @@
 import { asyncHandler } from './../../utils/asyncHandler';
 import { Router } from "express";
-import { keycloak } from "../../controllers/keyCloak";
-import { me } from './entity';
+import { login, logout, me, refreshToken, register } from './entity';
+import auth from '../../middleware/auth';
 
 const router = Router();
 
-router.get('/user/login', (req, res) => res.redirect(keycloak.loginUrl("idontknow", process.env.REDIRECT_URL!)));
-router.get('/user/me', keycloak.protect(), asyncHandler(me));
+router.post('/user/register', asyncHandler(register));
+router.post('/user/login', asyncHandler(login));
+router.get('/user/refresh-token', asyncHandler(refreshToken));
+router.get('/user/logout', asyncHandler(logout));
+router.get('/user/me', auth, asyncHandler(me));
 
 export default router;

@@ -1,18 +1,19 @@
 export interface IText {
-	id: string
-	text: string
-	longestWords: string[]
-	wordCount: number
-	characterCount: number
-	sentenceCount: number
-	paragraphCount: number
+	id: string;
+	text: string;
+	longestWords: string[];
+	wordCount: number;
+	characterCount: number;
+	sentenceCount: number;
+	paragraphCount: number;
 }
 
 export interface IUser {
-	username: string
-	email: string
-	firstName: string
-	lastName: string
+	id: string;
+	username: string;
+	email: string;
+	firstName: string;
+	lastName: string;
 }
 
 
