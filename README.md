@@ -33,6 +33,12 @@ docker compose up --build
 
 This will set up both the frontend and server.
 
+### Setup keycloak
+
+Import the ```realm-export.json``` file while creating a keycloak realm
+
+#### click on the create realm →click on Browse →add realm-export. json ( exported realm) → after import done click on the Create button 
+
 ### Application Ports
 
 - **Frontend**: Available locally at [http://localhost:4173](http://localhost:4173)
