@@ -6,12 +6,7 @@ class RedisUtils {
   private client: Redis;
 
   constructor() {
-    //  If using docker images then then use the (host:"redis"),
-    //  and (port:6379) while creating the instance.
-    this.client = new Redis({
-      host: "localhost",
-      port: 6379
-    });
+    this.client = new Redis(process.env.REDIS_URL!);
     if (this.client) logger.info("=> Redis client initialized");
   }
 
