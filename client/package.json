@@ -3,11 +3,32 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "author": {
+    "name": "Yeasir Hossain",
+    "email": "yeasir06@example.com",
+    "url": "https://github.com/Yeasir-Hossain"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Yeasir-Hossain/keycloak-authentication"
+  },
+  "keywords": [
+    "react",
+    "typescript",
+    "text-analysis",
+    "keycloak",
+    "authentication",
+    "redux",
+    "tailwindcss",
+    "shadcn-ui"
+  ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview --host"
+    "build": "tsc && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

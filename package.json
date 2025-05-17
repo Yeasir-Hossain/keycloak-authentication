@@ -1,0 +1,48 @@
+{
+  "name": "keycloak-authentication",
+  "version": "1.0.0",
+  "description": "Full-stack Text Analysis Application with Keycloak Authentication",
+  "author": {
+    "name": "Yeasir Hossain",
+    "email": "yeasir06@example.com",
+    "url": "https://github.com/Yeasir-Hossain"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Yeasir-Hossain/keycloak-authentication"
+  },
+  "keywords": [
+    "keycloak",
+    "authentication",
+    "text-analysis",
+    "full-stack",
+    "react",
+    "node",
+    "mongodb",
+    "redis",
+    "docker"
+  ],
+  "scripts": {
+    "install:all": "npm run install:client && npm run install:server",
+    "install:client": "cd client && npm install",
+    "install:server": "cd server && npm install",
+    "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
+    "dev:client": "cd client && npm run dev",
+    "dev:server": "cd server && npm run dev",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "cd client && npm run build",
+    "build:server": "cd server && npm run build",
+    "start": "cd server && npm run start",
+    "test": "npm run test:client && npm run test:server",
+    "test:client": "cd client && npm run test",
+    "test:server": "cd server && npm run test"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "private": false,
+  "license": "MIT"
+}
