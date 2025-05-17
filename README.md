@@ -2,6 +2,8 @@
 
 A full-stack application for text analysis with secure authentication using Keycloak. This project demonstrates integration of modern web technologies with enterprise-grade authentication.
 
+![Keycloak](https://img.shields.io/badge/Keycloak-Authentication-blue) ![MongoDB](https://img.shields.io/badge/MongoDB-Database-green) ![Express](https://img.shields.io/badge/Express-Backend-lightgrey) ![React](https://img.shields.io/badge/React-Frontend-blue) ![Node.js](https://img.shields.io/badge/Node.js-Runtime-green) ![Redis](https://img.shields.io/badge/Redis-Caching-red) ![Docker](https://img.shields.io/badge/Docker-Containerization-blue) ![Text Analysis](https://img.shields.io/badge/Text-Analysis-yellow)
+
 ## Overview
 
 This application allows users to:
